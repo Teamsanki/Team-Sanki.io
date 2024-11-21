@@ -6,22 +6,27 @@ const scoreDisplay = document.getElementById("score");
 // Variables
 let score = 0;
 let ballX = Math.random() * 380; // Random starting X position for the ball
-let ballY = 0;                  // Starting Y position for the ball
-let ballSpeedY = 2;             // Speed of the ball
-let paddleX = 150;              // Paddle's starting X position
-let isDragging = false;         // Track touch drag status
+let ballY = 0;                   // Starting Y position for the ball
+let ballSpeedY = 2;              // Speed of the ball
+let paddleX = 150;               // Paddle's starting X position
+let isDragging = false;          // Track touch drag status
 
 // Update paddle position for touch events
 document.addEventListener("touchstart", (e) => {
   isDragging = true;
+  // Prevent default action to stop page scrolling
+  e.preventDefault();
 });
 
 document.addEventListener("touchmove", (e) => {
   if (isDragging) {
     const touchX = e.touches[0].clientX; // Get touch position
     const containerRect = document.querySelector(".game-container").getBoundingClientRect();
-    paddleX = Math.min(Math.max(touchX - containerRect.left - 50, 0), containerRect.width - 100); // Limit paddle within bounds
+    // Limit paddle position within container bounds
+    paddleX = Math.min(Math.max(touchX - containerRect.left - 50, 0), containerRect.width - 100);
     paddle.style.left = `${paddleX}px`;
+    // Prevent default action to stop page scrolling
+    e.preventDefault();
   }
 });
 
