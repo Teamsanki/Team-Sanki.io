@@ -3,43 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bucket Ball Game</title>
+  <title>Ball Catch Game</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <!-- Registration Popup -->
   <div id="registrationPopup" class="popup">
-    <div class="popup-content">
-      <h2>Enter Your Name</h2>
-      <input type="text" id="playerName" placeholder="Enter name">
-      <button id="registerButton">Register</button>
-    </div>
+    <h2>Register</h2>
+    <input type="text" id="playerName" placeholder="Enter your name" required />
+    <button id="registerButton">Register</button>
   </div>
 
   <!-- Start Game Popup -->
   <div id="startPopup" class="popup">
-    <div class="popup-content">
-      <h2>Hello, <span id="playerGreeting"></span></h2>
-      <button id="startGameButton">Start Game</button>
-    </div>
-  </div>
-
-  <!-- Game Over Popup -->
-  <div id="gameOverPopup" class="popup">
-    <div class="popup-content">
-      <h2>Game Over</h2>
-      <p>Your final score: <span id="finalScore"></span></p>
-      <p id="targetScoreMessage"></p>
-      <button id="restartButton">Restart</button>
-    </div>
+    <h2>Welcome, <span id="playerGreeting"></span></h2>
+    <button id="startGameButton">Start Game</button>
   </div>
 
   <!-- Game Container -->
   <div id="gameContainer">
-    <div id="bucket"></div>
+    <div id="scoreBoard">
+      <h2>Score: <span id="score">0</span></h2>
+    </div>
     <div id="ball"></div>
-    <div id="score">Score: 0</div>
-    <div id="targetScore"></div>
+    <div id="bucket"></div>
+  </div>
+
+  <!-- Game Over Popup -->
+  <div id="gameOverPopup" class="popup">
+    <h2>Game Over</h2>
+    <p>Your Score: <span id="finalScore">0</span></p>
+    <p id="targetScoreMessage"></p>
+    <p id="targetScore"></p>
+    <button id="restartButton">Restart</button>
   </div>
 
   <script src="script.js"></script>
