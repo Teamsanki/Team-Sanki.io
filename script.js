@@ -15,9 +15,10 @@ const targetScoreMessage = document.getElementById("targetScoreMessage");
 
 let score = 0;
 let playerId = null;
-let ballSpeed = 5;  // Ball speed
+let ballSpeed = 3;  // Ball speed
 let bucket = document.getElementById("bucket");
 let ball = document.getElementById("ball");
+let isMobile = /Mobi|Android/i.test(navigator.userAgent); // Check if device is mobile
 
 // Initialize Game
 function initGame() {
@@ -150,4 +151,9 @@ function endGame() {
   }
 
   gameOverPopup.style.display = "block";
-  game
+}
+
+// Restart Game
+restartButton.addEventListener("click", () => {
+  gameOverPopup.style.display = "none";
+  gameContainer.style.display = "
