@@ -1,42 +1,60 @@
-.registration-popup,
-.start-popup {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 10px;
-  border: 2px solid #333;
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f4f4f4;
+}
+
+.popup {
   text-align: center;
-  width: 90%;
-  max-width: 400px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  margin: 100px auto;
+  padding: 20px;
+  width: 300px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.registration-popup h2,
-.start-popup h2 {
-  margin: 0 0 20px;
+#gameContainer {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: #87ceeb;
 }
 
-.registration-popup input,
-.start-popup button {
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-top: 10px;
+#box {
+  width: 100px;
+  height: 100px;
+  background: red;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.registration-popup button,
-.start-popup button {
-  background-color: #4a90e2;
-  color: #ffffff;
-  border: none;
-  cursor: pointer;
+#ball {
+  width: 30px;
+  height: 30px;
+  background: yellow;
+  border-radius: 50%;
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  animation: bounce 2s infinite;
 }
 
-.registration-popup button:hover,
-.start-popup button:hover {
-  background-color: #357ab7;
+@keyframes bounce {
+  0%, 100% {
+    top: 50px;
+  }
+  50% {
+    top: 300px;
+  }
+}
+
+#scoreBoard {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 20px;
+  color: #fff;
 }
