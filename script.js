@@ -1,67 +1,40 @@
-// Select elements
-const paddle = document.getElementById("paddle");
-const ball = document.getElementById("ball");
-const scoreDisplay = document.getElementById("score");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catch the Ball Game</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Registration Popup -->
+  <div class="registration-popup" id="registrationPopup" style="display: none;">
+    <h2>Welcome to the Game!</h2>
+    <form id="registrationForm">
+      <label for="playerName">Enter Your Name:</label>
+      <input type="text" id="playerName" placeholder="Your Name" required />
+      <button type="submit">Register</button>
+    </form>
+  </div>
 
-// Variables
-let score = 0;
-let ballX = Math.random() * 380; // Random starting X position for the ball
-let ballY = 0;                   // Starting Y position for the ball
-let ballSpeedY = 2;              // Speed of the ball
-let paddleX = 150;               // Paddle's starting X position
-let isDragging = false;          // Track touch drag status
+  <!-- Start Game Popup -->
+  <div class="start-popup" id="startPopup" style="display: none;">
+    <h2>Welcome Back, <span id="playerGreeting"></span>!</h2>
+    <button id="startGameButton">Start Game</button>
+  </div>
 
-// Update paddle position for touch events
-document.addEventListener("touchstart", (e) => {
-  isDragging = true;
-  // Prevent default action to stop page scrolling
-  e.preventDefault();
-});
+  <div class="game-container" id="gameContainer" style="display: none;">
+    <div class="box" id="box"></div>
+    <div class="ball" id="ball"></div>
+    <div class="score-board">
+      Player: <span id="playerNameDisplay"></span> | Score: <span id="score">0</span> | Target: <span id="highScore">0</span>
+    </div>
+    <div class="game-over" id="gameOver" style="display: none;">
+      <h2>Game Over!</h2>
+      <button id="restart">Restart</button>
+    </div>
+  </div>
 
-document.addEventListener("touchmove", (e) => {
-  if (isDragging) {
-    const touchX = e.touches[0].clientX; // Get touch position
-    const containerRect = document.querySelector(".game-container").getBoundingClientRect();
-    // Limit paddle position within container bounds
-    paddleX = Math.min(Math.max(touchX - containerRect.left - 50, 0), containerRect.width - 100);
-    paddle.style.left = `${paddleX}px`;
-    // Prevent default action to stop page scrolling
-    e.preventDefault();
-  }
-});
-
-document.addEventListener("touchend", () => {
-  isDragging = false;
-});
-
-// Game loop
-function gameLoop() {
-  // Move the ball
-  ballY += ballSpeedY;
-  ball.style.top = `${ballY}px`;
-  ball.style.left = `${ballX}px`;
-
-  // Check if the ball hits the paddle
-  if (ballY >= 560 && ballX >= paddleX && ballX <= paddleX + 100) {
-    ballY = 0; // Reset ball to the top
-    ballX = Math.random() * 380; // New random X position
-    ballSpeedY += 0.2; // Increase ball speed
-    score++; // Increase score
-    scoreDisplay.textContent = score;
-  }
-
-  // Check if the ball hits the bottom (missed)
-  if (ballY > 600) {
-    alert(`Game Over! Your Score: ${score}`);
-    ballY = 0; // Reset ball position
-    ballX = Math.random() * 380; // Reset X position
-    ballSpeedY = 2; // Reset speed
-    score = 0; // Reset score
-    scoreDisplay.textContent = score;
-  }
-
-  requestAnimationFrame(gameLoop); // Keep the loop going
-}
-
-// Start the game loop
-gameLoop();
+  <script src="script.js"></script>
+</body>
+</html>
