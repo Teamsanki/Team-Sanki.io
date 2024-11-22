@@ -1,80 +1,83 @@
+/* General Styles */
 body {
-  margin: 0;
-  padding: 0;
   font-family: Arial, sans-serif;
-  background: #f4f4f4;
+  background-color: #f0f0f0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .popup {
   display: none;
-  text-align: center;
-  margin: 100px auto;
-  padding: 20px;
-  width: 300px;
-  background: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
 
+.popup-content {
+  text-align: center;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Game Container */
 #gameContainer {
   position: relative;
   width: 100vw;
   height: 100vh;
-  background: #87ceeb;
-  overflow: hidden;
+  display: none;
+  justify-content: center;
+  align-items: center;
 }
 
 #bucket {
-  width: 150px;
-  height: 30px;
-  background: brown;
   position: absolute;
-  bottom: 10px;
+  bottom: 20px;
   left: 50%;
+  width: 150px;
+  height: 20px;
+  background-color: #3498db;
+  border-radius: 10px;
   transform: translateX(-50%);
 }
 
 #ball {
-  width: 30px;
-  height: 30px;
-  background: yellow;
-  border-radius: 50%;
   position: absolute;
   top: 50px;
   left: 50%;
-  animation: bounce 2s infinite;
+  width: 30px;
+  height: 30px;
+  background-color: #e74c3c;
+  border-radius: 50%;
+  transform: translateX(-50%);
 }
 
-@keyframes bounce {
-  0%, 100% {
-    top: 50px;
-  }
-  50% {
-    top: 300px;
-  }
-}
-
-#scoreBoard {
+#score, #targetScore {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 20px;
+  left: 20px;
   font-size: 20px;
-  color: white;
+  font-weight: bold;
+  color: #333;
 }
 
 #targetScore {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 18px;
-  color: white;
-}
-
-#targetScoreMessage {
-  font-size: 18px;
-  color: white;
-  margin-top: 10px;
+  top: 50px;
 }
