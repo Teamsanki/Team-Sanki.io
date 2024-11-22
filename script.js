@@ -129,4 +129,52 @@ function startGame() {
       // Reset ball to the top after it touches the bucket
       ballY = 50;
       ballX = Math.random() * window.innerWidth; // Randomize X position
-      ball.style.left
+      ball.style.left = `${ballX}px`;
+      ball.style.top = `${ballY}px`;
+    }
+
+    // End the game if score hits 20
+    if (score >= 20) {
+      endGame();
+    } else {
+      requestAnimationFrame(update);
+    }
+  }
+
+  // Initialize game loop
+  update();
+
+  // Handle bucket movement based on touch or mouse
+  function handleBucketMovement(event) {
+    const bucketWidth = bucket.offsetWidth;
+    const screenWidth = window.innerWidth;
+
+    if (isMobile) {
+      const touchX = event.touches ? event.touches[0].clientX : event.clientX;
+      bucket.style.left = `${Math.min(Math.max(touchX - bucketWidth / 2, 0), screenWidth - bucketWidth)}px`;
+    } else {
+      const mouseX = event.clientX;
+      bucket.style.left = `${Math.min(Math.max(mouseX - bucketWidth / 2, 0), screenWidth - bucketWidth)}px`;
+    }
+  }
+
+  window.addEventListener(isMobile ? "touchmove" : "mousemove", handleBucketMovement);
+}
+
+// End the Game
+function endGame() {
+  gameOver = true;
+  finalScore.textContent = score;
+  gameOverPopup.style.display = "block";
+  targetScoreMessage.textContent = score >= parseInt(localStorage.getItem("targetScore") || 0) ? "You reached your target!" : "Try again!";
+  localStorage.setItem("targetScore", score);
+}
+
+// Restart the Game
+restartButton.addEventListener("click", () => {
+  gameOverPopup.style.display = "none";
+  startGame();
+});
+
+// Initialize the game when the page loads
+window.onload = initGame;
