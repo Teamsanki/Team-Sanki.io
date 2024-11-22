@@ -27,10 +27,10 @@ body {
   overflow: hidden;
 }
 
-#box {
-  width: 100px;
-  height: 100px;
-  background: red;
+#bucket {
+  width: 150px;
+  height: 30px;
+  background: brown;
   position: absolute;
   bottom: 10px;
   left: 50%;
@@ -63,4 +63,18 @@ body {
   left: 10px;
   font-size: 20px;
   color: white;
+}
+
+#targetScore {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 18px;
+  color: white;
+}
+
+#targetScoreMessage {
+  font-size: 18px;
+  color: white;
+  margin-top: 10px;
 }
