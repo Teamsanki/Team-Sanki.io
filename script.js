@@ -103,10 +103,10 @@ function startGame() {
 
     // Check if the ball is inside the bucket area and increase score
     if (
-      ballY >= window.innerHeight - 80 &&
-      ballY <= window.innerHeight - 50 &&
-      ballX >= bucket.offsetLeft &&
-      ballX <= bucket.offsetLeft + bucket.offsetWidth
+      ballY >= window.innerHeight - 80 && // Ball touches the bottom
+      ballY <= window.innerHeight - 50 && // Ball is within the bucket's height
+      ballX >= bucket.offsetLeft && // Ball is within the left bound of the bucket
+      ballX <= bucket.offsetLeft + bucket.offsetWidth // Ball is within the right bound of the bucket
     ) {
       score++;
       scoreBoard.textContent = score;
