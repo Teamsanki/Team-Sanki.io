@@ -3,15 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simple Game</title>
+  <title>Player Registration Game</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <!-- Registration Popup -->
   <div id="registrationPopup" class="popup">
     <h2>Enter Your Name</h2>
-    <input type="text" id="playerName" placeholder="Name">
+    <input type="text" id="playerName" placeholder="Enter your name">
     <button id="registerButton">Register</button>
+  </div>
+
+  <!-- Game Start Popup -->
+  <div id="startPopup" class="popup" style="display: none;">
+    <h2>Welcome, <span id="playerGreeting"></span>!</h2>
+    <button id="startGameButton">Start Game</button>
   </div>
 
   <!-- Game Area -->
@@ -19,6 +25,13 @@
     <div id="box"></div>
     <div id="ball"></div>
     <div id="scoreBoard">Score: <span id="score">0</span></div>
+  </div>
+
+  <!-- Game Over Popup -->
+  <div id="gameOverPopup" class="popup" style="display: none;">
+    <h2>Game Over</h2>
+    <p>Your Score: <span id="finalScore"></span></p>
+    <button id="restartButton">Restart</button>
   </div>
 
   <script src="script.js" defer></script>
