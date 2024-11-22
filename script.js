@@ -133,9 +133,9 @@ function endGame() {
   const previousTarget = localStorage.getItem("targetScore");
   if (!previousTarget || score > previousTarget) {
     localStorage.setItem("targetScore", score);
-    targetScoreMessage.textContent = `New Record! Target: ${score}`;
+    targetScoreMessage.textContent = "You beat your target!";
   } else {
-    targetScoreMessage.textContent = `Target: ${previousTarget}`;
+    targetScoreMessage.textContent = "Try to beat your target next time!";
   }
 
   gameOverPopup.style.display = "block";
@@ -159,4 +159,12 @@ window.addEventListener("touchstart", (e) => {
 
 window.addEventListener("touchmove", (e) => {
   touchEndX = e.touches[0].clientX; // Track the movement of touch
-  let bucketLeft = bucket.offsetLeft + (
+  let bucketLeft = bucket.offsetLeft + (touchEndX - touchStartX);
+  // Keep bucket within the window bounds
+  bucketLeft = Math.max(0, Math.min(bucketLeft, window.innerWidth - bucket.offsetWidth));
+  bucket.style.left = `${bucketLeft}px`;
+  touchStartX = touchEndX; // Update start position for next move
+});
+
+// Initialize Game on Load
+initGame();
