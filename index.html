@@ -22,15 +22,17 @@
 
   <!-- Game Area -->
   <div id="gameContainer" style="display: none;">
-    <div id="box"></div>
+    <div id="bucket"></div>
     <div id="ball"></div>
     <div id="scoreBoard">Score: <span id="score">0</span></div>
+    <div id="targetScore">Target: 0</div>
   </div>
 
   <!-- Game Over Popup -->
   <div id="gameOverPopup" class="popup" style="display: none;">
     <h2>Game Over</h2>
     <p>Your Score: <span id="finalScore"></span></p>
+    <p id="targetScoreMessage"></p>
     <button id="restartButton">Restart</button>
   </div>
 
