@@ -10,9 +10,13 @@ const gameOverPopup = document.getElementById("gameOverPopup");
 const restartButton = document.getElementById("restartButton");
 const scoreBoard = document.getElementById("score");
 const finalScore = document.getElementById("finalScore");
+const targetScore = document.getElementById("targetScore");
+const targetScoreMessage = document.getElementById("targetScoreMessage");
 
 let score = 0;
 let playerId = null;
+let bucket = document.getElementById("bucket");
+let ball = document.getElementById("ball");
 
 // Initialize Game
 function initGame() {
@@ -28,6 +32,7 @@ function initGame() {
     console.log("Player found! Loading data...");
     const playerName = localStorage.getItem(playerId);
     showStartPopup(playerName);
+    setTargetScore();
   }
 }
 
@@ -48,12 +53,23 @@ registerButton.addEventListener("click", () => {
   registrationPopup.style.display = "none";
 
   showStartPopup(playerName);
+  setTargetScore();
 });
 
 // Show Start Popup
 function showStartPopup(playerName) {
   playerGreeting.textContent = playerName;
   startPopup.style.display = "block";
+}
+
+// Set Target Score from LocalStorage or Default
+function setTargetScore() {
+  const previousTarget = localStorage.getItem("targetScore");
+  if (previousTarget) {
+    targetScore.textContent = `Target: ${previousTarget}`;
+  } else {
+    targetScore.textContent = `Target: 0`;
+  }
 }
 
 // Start Game
@@ -70,6 +86,10 @@ function startGame() {
 
   let ballY = 50; // Ball's initial Y position
   let ballDirection = 5;
+  let ballX = Math.random() * window.innerWidth; // Random X position for ball
+
+  // Set the ball's position
+  ball.style.left = `${ballX}px`;
 
   function update() {
     ballY += ballDirection;
@@ -77,11 +97,23 @@ function startGame() {
     // Ball bounces off the top and bottom
     if (ballY >= window.innerHeight - 50 || ballY <= 0) {
       ballDirection *= -1;
-      score++;
-      scoreBoard.textContent = score;
     }
 
     ball.style.top = `${ballY}px`;
+
+    // Check if the ball is inside the bucket area and increase score
+    if (
+      ballY >= window.innerHeight - 80 &&
+      ballY <= window.innerHeight - 50 &&
+      ballX >= bucket.offsetLeft &&
+      ballX <= bucket.offsetLeft + bucket.offsetWidth
+    ) {
+      score++;
+      scoreBoard.textContent = score;
+      ballY = 50; // Reset ball to the top after catch
+      ballX = Math.random() * window.innerWidth; // Randomize X position
+      ball.style.left = `${ballX}px`;
+    }
 
     if (score >= 10) {
       endGame();
@@ -96,6 +128,16 @@ function startGame() {
 // End Game
 function endGame() {
   finalScore.textContent = score;
+  
+  // Save target score if this score is higher than previous target
+  const previousTarget = localStorage.getItem("targetScore");
+  if (!previousTarget || score > previousTarget) {
+    localStorage.setItem("targetScore", score);
+    targetScoreMessage.textContent = `New Record! Target: ${score}`;
+  } else {
+    targetScoreMessage.textContent = `Target: ${previousTarget}`;
+  }
+
   gameOverPopup.style.display = "block";
   gameContainer.style.display = "none";
 }
@@ -104,7 +146,17 @@ function endGame() {
 restartButton.addEventListener("click", () => {
   gameOverPopup.style.display = "none";
   showStartPopup(playerGreeting.textContent);
+  setTargetScore();
 });
 
-// Initialize Game on Load
-initGame();
+// Touch Event for Bucket Control
+let touchStartX = 0;
+let touchEndX = 0;
+
+window.addEventListener("touchstart", (e) => {
+  touchStartX = e.touches[0].clientX; // Record the start position of touch
+});
+
+window.addEventListener("touchmove", (e) => {
+  touchEndX = e.touches[0].clientX; // Track the movement of touch
+  let bucketLeft = bucket.offsetLeft + (
