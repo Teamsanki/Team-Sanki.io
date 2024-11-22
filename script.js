@@ -16,9 +16,13 @@ const targetScoreMessage = document.getElementById("targetScoreMessage");
 let score = 0;
 let playerId = null;
 let ballSpeed = 3;  // Ball speed
-let bucket = document.getElementById("bucket");
+let ballY = 50; // Ball's initial Y position
+let ballX = Math.random() * window.innerWidth; // Random X position for ball
 let ball = document.getElementById("ball");
+let bucket = document.getElementById("bucket");
 let isMobile = /Mobi|Android/i.test(navigator.userAgent); // Check if device is mobile
+let bucketSpeed = 0; // Speed of bucket movement
+let gameOver = false; // Game over state
 
 // Initialize Game
 function initGame() {
@@ -86,14 +90,17 @@ function startGame() {
   score = 0;
   scoreBoard.textContent = score;
 
-  let ballY = 50; // Ball's initial Y position
-  let ballX = Math.random() * window.innerWidth; // Random X position for ball
-
-  // Set the ball's initial position
+  ballY = 50; // Ball's initial Y position
+  ballX = Math.random() * window.innerWidth; // Random X position for ball
   ball.style.left = `${ballX}px`;
   ball.style.top = `${ballY}px`;
 
+  gameOver = false;
+
   function update() {
+    if (gameOver) return;
+
+    // Ball's upward/downward movement
     ballY += ballSpeed;
 
     // Ball bounces off the top and bottom
@@ -122,38 +129,4 @@ function startGame() {
       // Reset ball to the top after it touches the bucket
       ballY = 50;
       ballX = Math.random() * window.innerWidth; // Randomize X position
-      ball.style.left = `${ballX}px`;
-      ball.style.top = `${ballY}px`;
-    }
-
-    // End game when score reaches a certain value
-    if (score >= 20) {
-      endGame();
-    } else {
-      requestAnimationFrame(update);
-    }
-  }
-
-  update();
-}
-
-// End Game
-function endGame() {
-  finalScore.textContent = score;
-  
-  // Save target score if this score is higher than previous target
-  const previousTarget = localStorage.getItem("targetScore");
-  if (!previousTarget || score > previousTarget) {
-    localStorage.setItem("targetScore", score);
-    targetScoreMessage.textContent = "You beat your target!";
-  } else {
-    targetScoreMessage.textContent = "Try to beat your target next time!";
-  }
-
-  gameOverPopup.style.display = "block";
-}
-
-// Restart Game
-restartButton.addEventListener("click", () => {
-  gameOverPopup.style.display = "none";
-  gameContainer.style.display = "
+      ball.style.left
