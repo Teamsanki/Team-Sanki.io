@@ -10,7 +10,6 @@ body {
   overflow: hidden;
 }
 
-/* Popup Styles */
 .popup {
   display: none;
   position: fixed;
