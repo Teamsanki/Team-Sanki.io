@@ -15,6 +15,7 @@ const targetScoreMessage = document.getElementById("targetScoreMessage");
 
 let score = 0;
 let playerId = null;
+let ballSpeed = 5;  // Ball speed
 let bucket = document.getElementById("bucket");
 let ball = document.getElementById("ball");
 
@@ -85,20 +86,21 @@ function startGame() {
   scoreBoard.textContent = score;
 
   let ballY = 50; // Ball's initial Y position
-  let ballDirection = 5;
   let ballX = Math.random() * window.innerWidth; // Random X position for ball
 
-  // Set the ball's position
+  // Set the ball's initial position
   ball.style.left = `${ballX}px`;
+  ball.style.top = `${ballY}px`;
 
   function update() {
-    ballY += ballDirection;
+    ballY += ballSpeed;
 
     // Ball bounces off the top and bottom
     if (ballY >= window.innerHeight - 50 || ballY <= 0) {
-      ballDirection *= -1;
+      ballSpeed *= -1;
     }
 
+    // Update ball position
     ball.style.top = `${ballY}px`;
 
     // Check if the ball is inside the bucket area and increase score
@@ -110,12 +112,21 @@ function startGame() {
     ) {
       score++;
       scoreBoard.textContent = score;
-      ballY = 50; // Reset ball to the top after catch
+
+      // Increase ball speed when score reaches 10
+      if (score >= 10) {
+        ballSpeed = 7; // Increase speed when score hits 10
+      }
+
+      // Reset ball to the top after it touches the bucket
+      ballY = 50;
       ballX = Math.random() * window.innerWidth; // Randomize X position
       ball.style.left = `${ballX}px`;
+      ball.style.top = `${ballY}px`;
     }
 
-    if (score >= 10) {
+    // End game when score reaches a certain value
+    if (score >= 20) {
       endGame();
     } else {
       requestAnimationFrame(update);
@@ -139,32 +150,4 @@ function endGame() {
   }
 
   gameOverPopup.style.display = "block";
-  gameContainer.style.display = "none";
-}
-
-// Restart Game
-restartButton.addEventListener("click", () => {
-  gameOverPopup.style.display = "none";
-  showStartPopup(playerGreeting.textContent);
-  setTargetScore();
-});
-
-// Touch Event for Bucket Control
-let touchStartX = 0;
-let touchEndX = 0;
-
-window.addEventListener("touchstart", (e) => {
-  touchStartX = e.touches[0].clientX; // Record the start position of touch
-});
-
-window.addEventListener("touchmove", (e) => {
-  touchEndX = e.touches[0].clientX; // Track the movement of touch
-  let bucketLeft = bucket.offsetLeft + (touchEndX - touchStartX);
-  // Keep bucket within the window bounds
-  bucketLeft = Math.max(0, Math.min(bucketLeft, window.innerWidth - bucket.offsetWidth));
-  bucket.style.left = `${bucketLeft}px`;
-  touchStartX = touchEndX; // Update start position for next move
-});
-
-// Initialize Game on Load
-initGame();
+  game
